@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = "http://localhost:5001"
 
 console.log("api url", API_URL)
 
