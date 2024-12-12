@@ -15,7 +15,7 @@ const app = express()
 
 connectDB()
 
-app.use(cors("http://localhost:3000"))
+app.use(cors({ origin: '*' })); 
 
 app.use(express.json())
 
