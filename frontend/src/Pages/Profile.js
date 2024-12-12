@@ -20,7 +20,7 @@ const Profile = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(updateProfile({ name, email, password, profile }));
-    };
+    };  
 
     useEffect(() => {
         if (userInfo) {
