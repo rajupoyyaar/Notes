@@ -10,7 +10,7 @@ const path = require('path')
 
 //dotenv.config()
 
-const PORT = process.env.PORT || 5001
+const PORT = process.env.PORT || 4000
 const app = express()
 
 connectDB()
