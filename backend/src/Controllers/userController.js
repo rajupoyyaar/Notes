@@ -54,31 +54,42 @@ const authUser = asyncHandler(async (req,res)=>{
      }
 })
 
-const UpdateProfile = asyncHandler(async (req,res)=> {
-    const user = await User.findById(req.user._id)
+const UpdateProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
 
-    if(user){
-        user.name = req.body.name || user.name
-        user.email = req.body.email || user.email
-        user.profile = req.body.profile || user.profile
-
-        if(req.body.password){
-            user.password = req.body.password
+    if (user) {
+        // Check if the email is being changed and already exists for another user
+        if (req.body.email && req.body.email !== user.email) {
+            const emailExists = await User.findOne({ email: req.body.email });
+            if (emailExists) {
+                res.status(400);
+                throw new Error('Email already in use by another account.');
+            }
         }
-        const updatedUser = await user.save()
+
+        // Update the fields
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        user.profile = req.body.profile || user.profile;
+
+        if (req.body.password) {
+            user.password = req.body.password;
+        }
+
+        const updatedUser = await user.save();
 
         res.json({
-            _id:updatedUser._id,
-            name:updatedUser.name,
-            email:updatedUser.email,
-            profile:updatedUser.profile,
-            token:generateToken(updatedUser._id)
-        })
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            profile: updatedUser.profile,
+            token: generateToken(updatedUser._id),
+        });
+    } else {
+        res.status(404);
+        throw new Error('User Not Found');
     }
-    else{
-        res.status(404)
-        throw new Error('User Not Found')
-    }
-})
+});
+
 
 module.exports = {registerUser, authUser, UpdateProfile}
