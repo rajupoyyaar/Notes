@@ -1,5 +1,5 @@
 const express = require('express')
-//const dotenv = require('dotenv')
+const dotenv = require('dotenv')
 //const notes = require('./data/notes')
 const cors = require('cors')
 const connectDB = require('./config/db')
@@ -8,9 +8,9 @@ const notesRouter = require('./Routes/NoteRoutes')
 const { notFound, errorHandler } = require('./middlewares/errorMiddleWare')
 const path = require('path')
 
-//dotenv.config()
+dotenv.config()
 
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 5001
 const app = express()
 
 connectDB()
